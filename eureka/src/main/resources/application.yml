@@ -1,0 +1,21 @@
+
+
+spring:
+  application:
+    name: app-eureka-center
+  security:
+    user: #配置用户的账号信息
+      name: @mvn.eureka.security.username@
+      password: @mvn.eureka.security.password@
+
+eureka:
+  instance:
+    #注册中心地址
+    hostname: @mvn.hostname@
+  server:
+    my-url: null
+  client:
+    fetch-registry: false
+    register-with-eureka: false
+    serviceUrl:
+      defaultZone: http://${spring.security.user.name}:${spring.security.user.password}@${eureka.instance.hostname}:8761/eureka/
