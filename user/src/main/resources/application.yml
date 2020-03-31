@@ -1,0 +1,1 @@
+##配置文件都在github上，只保留application-name即可spring:  application:    name: service-user

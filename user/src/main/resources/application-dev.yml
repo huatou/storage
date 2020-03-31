@@ -1,0 +1,32 @@
+#自定义配置
+zigar:
+  hostname: 127.0.0.1
+  eureka:
+    username: zigar
+    password: 123456
+
+#系统配置
+spring:
+  application:
+    name: service-user
+  datasource:
+    url: jdbc:mysql://${zigar.hostname}:3306/zigar_storage?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+    default-property-inclusion: non_null
+  redis:
+    database: 1
+
+#服务注册到eureka注册中心的地址
+eureka:
+  client:
+    service-url:
+      defaultZone: http://${zigar.eureka.username}:${zigar.eureka.password}@${zigar.hostname}:8761/eureka/
+
+logging:
+  level:
+    root: info

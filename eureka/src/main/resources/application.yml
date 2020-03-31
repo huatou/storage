@@ -1,8 +1,7 @@
 
-
 spring:
   application:
-    name: app-eureka-center
+    name: server-eureka
   security:
     user: #配置用户的账号信息
       name: @mvn.eureka.security.username@
