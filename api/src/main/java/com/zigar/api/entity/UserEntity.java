@@ -1,15 +1,19 @@
 package com.zigar.api.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
+
+import com.zigar.api.util.Unique;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import org.apache.ibatis.annotations.Insert;
 
 /**
  * <p>
@@ -29,11 +33,12 @@ public class UserEntity implements Serializable {
     private static final long serialVersionUID=1L;
 
     @ApiModelProperty(value = "用户ID")
-    @TableId("contract_id_")
-    private String contractId;
+    @TableId("user_id_")
+    private String userId;
 
     @ApiModelProperty(value = "用户名")
     @TableField("username_")
+    @Unique
     private String username;
 
     @ApiModelProperty(value = "密码")
@@ -46,14 +51,15 @@ public class UserEntity implements Serializable {
 
     @ApiModelProperty(value = "手机号")
     @TableField("phone_")
-    private Integer phone;
+    @Unique
+    private String phone;
 
     @ApiModelProperty(value = "最后登录时间")
     @TableField("last_login_time_")
     private LocalDateTime lastLoginTime;
 
     @ApiModelProperty(value = "创建时间")
-    @TableField("create_time_")
+    @TableField(value = "create_time_", fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
 
