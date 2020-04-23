@@ -1,0 +1,95 @@
+{
+	"info": {
+		"_postman_id": "1a27d575-d217-4559-b570-0e85be1c3ce6",
+		"name": "仓库管理系统",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "selectUser",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{storage_user_home}}/user/",
+							"host": [
+								"{{storage_user_home}}"
+							],
+							"path": [
+								"user",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "selectUsers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{storage_user_home}}/user",
+							"host": [
+								"{{storage_user_home}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "insertUser",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\":\"huatou\",\n\t\"password\":\"123456\",\n\t\"sex\":1,\n\t\"phone\":15202089155\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{storage_user_home}}/user",
+							"host": [
+								"{{storage_user_home}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateUser",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

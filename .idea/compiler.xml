@@ -2,14 +2,19 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
       <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="user" />
+        <module name="storage-user" />
+        <module name="storage-eureka" />
         <module name="code-generator" />
-        <module name="api" />
-        <module name="eureka" />
+        <module name="storage-api" />
+        <module name="storage-oauth2" />
+        <module name="storage-shop" />
+        <module name="storage-test" />
+        <module name="storage-goods" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -18,12 +23,16 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="api" options="-parameters" />
       <module name="code-generator" options="-parameters" />
-      <module name="eureka" options="-parameters" />
       <module name="server-eureka" options="-parameters" />
       <module name="storage" options="-parameters" />
-      <module name="user" options="-parameters" />
+      <module name="storage-api" options="-parameters" />
+      <module name="storage-eureka" options="-parameters" />
+      <module name="storage-goods" options="-parameters" />
+      <module name="storage-oauth2" options="-parameters" />
+      <module name="storage-shop" options="-parameters" />
+      <module name="storage-test" options="-parameters" />
+      <module name="storage-user" options="-parameters" />
     </option>
   </component>
 </project>

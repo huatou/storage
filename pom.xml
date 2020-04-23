@@ -10,10 +10,14 @@
     <version>1.0-SNAPSHOT</version>
 
     <modules>
-        <module>eureka</module>
-        <module>user</module>
-        <module>api</module>
+        <module>storage-eureka</module>
+        <module>storage-user</module>
+        <module>storage-api</module>
         <module>code-generator</module>
+        <module>storage-test</module>
+        <module>storage-oauth2</module>
+        <module>storage-shop</module>
+        <module>storage-goods</module>
     </modules>
 
     <parent>
@@ -25,6 +29,7 @@
 
     <properties>
         <java.version>1.8</java.version>
+        <zigar-core.version>1.0.0</zigar-core.version>
         <jjwt.version>0.9.0</jjwt.version>
         <mybatis-plus.version>3.3.0</mybatis-plus.version>
         <swagger.version>2.9.2</swagger.version>
@@ -42,6 +47,13 @@
     <dependencyManagement>
 
         <dependencies>
+
+            <!-- zigar.core -->
+            <dependency>
+                <groupId>com.zigar</groupId>
+                <artifactId>zigar-core</artifactId>
+                <version>${zigar-core.version}</version>
+            </dependency>
 
             <!-- spring-cloud -->
             <dependency>
@@ -113,6 +125,20 @@
                 <groupId>io.springfox</groupId>
                 <artifactId>springfox-swagger-ui</artifactId>
                 <version>${swagger.version}</version>
+            </dependency>
+
+            <!-- storage-api -->
+            <dependency>
+                <groupId>com.zigar</groupId>
+                <artifactId>storage-api</artifactId>
+                <version>${version}</version>
+            </dependency>
+
+            <!-- storage-user -->
+            <dependency>
+                <groupId>com.zigar</groupId>
+                <artifactId>storage-user</artifactId>
+                <version>${version}</version>
             </dependency>
 
         </dependencies>

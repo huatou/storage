@@ -1,0 +1,53 @@
+#自定义配置
+zigar:
+  hostname: 127.0.0.1
+  eureka:
+    username: zigar
+    password: 123456
+
+#系统配置
+server:
+  port: 8002
+
+spring:
+  application:
+    name: server-oauth2
+  datasource:
+    url: jdbc:mysql://${zigar.hostname}:3306/zigar_cloud_user?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai
+    username: zigar_user_admin
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+    default-property-inclusion: non_null
+  redis:
+    database: 3
+    host: ${zigar.hostname}
+  rabbitmq: #RabbitMQ相关的配置
+    host: ${zigar.hostname}
+    port: 5672
+    username: guest
+    password: guest
+
+###服务注册到eureka注册中心的地址
+eureka:
+  client:
+    service-url:
+      defaultZone: @mvn.eureka.client.serviceUrl.defaultZone@
+
+# 在feign中开启熔断器，不开启会报client服务不存在，dashboard中使用url ${applicationHost}:${port}/actuator/hystrix.stream
+feign:
+  hystrix:
+    enabled: true
+
+#开启所有端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+logging:
+  level:
+    root: info

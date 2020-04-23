@@ -51,7 +51,9 @@ public class CodeGenerator {
         strategy.setRestControllerStyle(true);
         strategy.setControllerMappingHyphenStyle(true);
         String tableNames[] = {
-                "z_user"
+                "z_module",
+                "z_privilege",
+                "z_role"
         };
         strategy.setInclude(tableNames);
         mpg.setStrategy(strategy);
