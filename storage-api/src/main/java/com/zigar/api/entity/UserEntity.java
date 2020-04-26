@@ -9,13 +9,19 @@ import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableField;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.zigar.zigarcore.myabtisplus.Unique;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 /**
  * <p>
@@ -30,7 +36,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @TableName("z_user")
 @ApiModel(value = "UserEntity对象", description = "用户")
-public class UserEntity implements Serializable {
+public class UserEntity implements Serializable, UserDetails {
 
     private static final long serialVersionUID = 1L;
 
@@ -68,4 +74,58 @@ public class UserEntity implements Serializable {
     @TableField(value = "create_time_", fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
+    @JsonIgnore
+    @TableField(value = "pwd_reset_time_")
+    private LocalDateTime pwdResetTime;
+
+    @JsonIgnore
+    @TableField(value = "system_role_")
+    private String systemRole;
+
+    @JsonIgnore
+    @TableField(value = "is_account_non_expired_")
+    private Boolean isAccountNonExpired;
+
+    @JsonIgnore
+    @TableField(value = "is_account_non_locked_")
+    private Boolean isAccountNonLocked;
+
+    @JsonIgnore
+    @TableField(value = "is_credentials_non_expired_")
+    private Boolean isCredentialsNonExpired;
+
+    @ApiModelProperty(value = "是否可用")
+    @TableField(value = "is_enabled_")
+    private Boolean isEnabled;
+
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+
+        List<GrantedAuthority> grantedAuthorityList = new ArrayList<>();
+
+
+
+        return null;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return false;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return false;
+    }
 }

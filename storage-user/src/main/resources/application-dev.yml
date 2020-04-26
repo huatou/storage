@@ -19,7 +19,7 @@ spring:
     time-zone: GMT+8
     default-property-inclusion: non_null
   redis:
-    database: 1
+    database: 3
 
 #服务注册到eureka注册中心的地址
 eureka:
