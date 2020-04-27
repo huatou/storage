@@ -1,4 +1,4 @@
-package com.zigar.user.security;//package com.zigar.user.system.security;
+package com.zigar.user.system.security;//package com.zigar.user.system.security;
 
 import com.alibaba.fastjson.JSON;
 import com.zigar.zigarcore.model.Results;
@@ -38,7 +38,9 @@ public class CustomLoginFailHandler implements AuthenticationFailureHandler {
         logger.info("------》   用户为：" + username + "的验证码为：" + imageCode.getCode());
         //如果是验证失败，则需要验证码
         if (e instanceof BadCredentialsException) {
-            results = Results.error("登录失败，用户名或密码错误", imageCode.getImageBase64());
+            results = Results.error("用户名或密码错误", imageCode.getImageBase64());
+        } else if (e instanceof ImageCodeException) {
+            results = Results.error(e.getMessage(), imageCode.getImageBase64());
         } else {
             results = Results.error(e.getMessage());
         }

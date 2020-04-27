@@ -1,4 +1,4 @@
-package com.zigar.user.security;//package com.zigar.user.system.security;
+package com.zigar.user.system.security;//package com.zigar.user.system.security;
 
 import sun.misc.BASE64Encoder;
 

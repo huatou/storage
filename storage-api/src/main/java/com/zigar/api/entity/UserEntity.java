@@ -15,12 +15,15 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.zigar.zigarcore.myabtisplus.Unique;
+import com.zigar.zigarcore.utils.StringUtils;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 /**
@@ -79,53 +82,58 @@ public class UserEntity implements Serializable, UserDetails {
     private LocalDateTime pwdResetTime;
 
     @JsonIgnore
-    @TableField(value = "system_role_")
-    private String systemRole;
+    @TableField(value = "roles_")
+    private String roles;
 
     @JsonIgnore
-    @TableField(value = "is_account_non_expired_")
+    @TableField(value = "is_account_non_expired_", fill = FieldFill.INSERT)
     private Boolean isAccountNonExpired;
 
     @JsonIgnore
-    @TableField(value = "is_account_non_locked_")
+    @TableField(value = "is_account_non_locked_", fill = FieldFill.INSERT)
     private Boolean isAccountNonLocked;
 
     @JsonIgnore
-    @TableField(value = "is_credentials_non_expired_")
+    @TableField(value = "is_credentials_non_expired_", fill = FieldFill.INSERT)
     private Boolean isCredentialsNonExpired;
 
     @ApiModelProperty(value = "是否可用")
-    @TableField(value = "is_enabled_")
+    @TableField(value = "is_enabled_", fill = FieldFill.INSERT)
     private Boolean isEnabled;
 
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-
         List<GrantedAuthority> grantedAuthorityList = new ArrayList<>();
-
-
-
-        return null;
+        if (!StringUtils.isEmpty(roles)) {
+            String[] roleStrArr = StringUtils.split(roles, ",");
+            if (!ArrayUtils.isEmpty(roleStrArr)) {
+                for (String roleStr : roleStrArr) {
+                    SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(roleStr);
+                    grantedAuthorityList.add(simpleGrantedAuthority);
+                }
+            }
+        }
+        return grantedAuthorityList;
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return isAccountNonExpired;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return isAccountNonLocked;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return isCredentialsNonExpired;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return isEnabled;
     }
 }

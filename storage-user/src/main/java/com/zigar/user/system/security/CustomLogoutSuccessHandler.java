@@ -1,4 +1,4 @@
-//package com.zigar.user.security;//package com.zigar.user.system.security;
+//package com.zigar.user.system.security;//package com.zigar.user.system.security;
 //
 //import com.zigar.api.entity.UserEntity;
 //import com.zigar.user.system.utils.request.RequestUtils;

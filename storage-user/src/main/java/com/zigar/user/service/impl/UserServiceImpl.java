@@ -3,7 +3,7 @@ package com.zigar.user.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.zigar.api.entity.UserEntity;
-import com.zigar.user.config.password.PasswordProperties;
+import com.zigar.user.system.password.PasswordProperties;
 import com.zigar.user.mapper.UserMapper;
 import com.zigar.user.service.IUserService;
 import com.zigar.user.utils.jwt.JwtToken;
@@ -12,12 +12,9 @@ import com.zigar.zigarcore.model.Results;
 import com.zigar.zigarcore.myabtisplus.ZServiceImpl;
 import com.zigar.zigarcore.utils.Assert;
 import com.zigar.zigarcore.utils.StringUtils;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.sql.Wrapper;
 
 /**
  * <p>

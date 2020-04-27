@@ -1,4 +1,4 @@
-package com.zigar.user.security;//package com.zigar.user.system.security;
+package com.zigar.user.system.security;//package com.zigar.user.system.security;
 //
 //import org.springframework.stereotype.Component;
 //import org.springframework.web.filter.GenericFilterBean;

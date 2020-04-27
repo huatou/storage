@@ -13,7 +13,13 @@ import org.springframework.context.annotation.ComponentScan;
  */
 
 @SpringBootApplication
-@ComponentScan(basePackages = {"com.zigar.user.service.impl", "com.zigar.user.rest","com.zigar.user.utils","com.zigar.user.security"})
+@ComponentScan(basePackages = {
+        "com.zigar.user.service.impl",
+        "com.zigar.user.rest",
+        "com.zigar.user.system.cache",
+        "com.zigar.user.system.password",
+        "com.zigar.user.system.security",
+        "com.zigar.user.utils"})
 @MapperScan("com.zigar.user.mapper")
 @EnableEurekaClient
 public class ServiceUserApplication {

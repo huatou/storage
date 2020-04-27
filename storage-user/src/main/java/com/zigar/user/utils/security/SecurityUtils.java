@@ -1,6 +1,7 @@
 package com.zigar.user.utils.security;
 
 import com.zigar.api.entity.UserEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -16,6 +17,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class SecurityUtils {
 
+    /**
+     * 获取当前用户信息
+     *
+     * @return
+     */
     public static final UserEntity getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null) {
@@ -28,6 +34,16 @@ public class SecurityUtils {
         return null;
     }
 
+
+    /**
+     * 设置当前用户信息
+     *
+     * @param userEntity
+     */
+    public static final void setCurrentUser(UserEntity userEntity) {
+        Authentication authentication = new UsernamePasswordAuthenticationToken(userEntity, userEntity.getPassword());
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+    }
 
 
 }

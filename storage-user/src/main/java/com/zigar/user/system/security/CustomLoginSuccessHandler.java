@@ -1,4 +1,4 @@
-package com.zigar.user.security;//package com.zigar.user.system.security;
+package com.zigar.user.system.security;//package com.zigar.user.system.security;
 
 import com.alibaba.fastjson.JSON;
 import com.zigar.api.entity.UserEntity;

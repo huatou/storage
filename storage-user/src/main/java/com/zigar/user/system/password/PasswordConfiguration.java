@@ -1,4 +1,4 @@
-package com.zigar.user.config.password;
+package com.zigar.user.system.password;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;

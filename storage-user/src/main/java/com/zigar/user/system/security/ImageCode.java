@@ -1,10 +1,10 @@
-package com.zigar.user.security;//package com.zigar.user.system.security;
+package com.zigar.user.system.security;
 
 import java.time.LocalDateTime;
 
 /**
  * 封装验证码信息
- * Created by ZhuPengWei on 2017/12/1.
+ * Created by zigar on 2017/12/1.
  */
 public class ImageCode {
 

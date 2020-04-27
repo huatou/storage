@@ -1,4 +1,4 @@
-package com.zigar.user.security;//package com.zigar.user.system.security;
+package com.zigar.user.system.security;//package com.zigar.user.system.security;
 
 import com.zigar.zigarcore.properties.SecurityProperties;
 import org.slf4j.Logger;
@@ -82,9 +82,9 @@ public class ImageCodeAuthenticationFilter extends AbstractAuthenticationProcess
                 String captcha = this.obtainCaptcha(request);
                 logger.info("------》   用户为：" + username + "的验证码为：" + cacheCaptcha + "；输入的验证码为：" + captcha);
                 if (StringUtils.isEmpty(captcha)) {
-                    throw new UsernameNotFoundException("验证码不能为空");
+                    throw new ImageCodeException("验证码不能为空");
                 } else if (!captcha.equalsIgnoreCase(cacheCaptcha)) {
-                    throw new UsernameNotFoundException("验证码不正确");
+                    throw new ImageCodeException("验证码不正确");
                 }
             }
 

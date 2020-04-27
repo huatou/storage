@@ -1,4 +1,4 @@
-package com.zigar.user.security;
+package com.zigar.user.system.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
