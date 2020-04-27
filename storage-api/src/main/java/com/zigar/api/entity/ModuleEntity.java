@@ -1,20 +1,19 @@
 package com.zigar.api.entity;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.TableId;
-
-import java.time.LocalDateTime;
-
 import com.baomidou.mybatisplus.annotation.TableField;
-
-import java.io.Serializable;
-
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.zigar.zigarcore.action.RequestInsertAction;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
+import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -37,10 +36,12 @@ public class ModuleEntity implements Serializable {
     @TableId("module_id_")
     private String moduleId;
 
+    @NotBlank(groups = RequestInsertAction.class, message = "新建请输入模块名")
     @ApiModelProperty(value = "模块名")
     @TableField("name_")
     private String name;
 
+    @NotBlank(groups = RequestInsertAction.class, message = "新建请输入操作项，多个以逗号隔开")
     @ApiModelProperty(value = "操作项，多个以逗号隔开")
     @TableField("actions_")
     private String actions;
@@ -50,7 +51,7 @@ public class ModuleEntity implements Serializable {
     private Integer sort;
 
     @ApiModelProperty(value = "是否可用")
-    @TableField("is_enabled_")
+    @TableField(value = "is_enabled_", fill = FieldFill.INSERT)
     private Integer isEnabled;
 
     @ApiModelProperty(value = "创建时间")

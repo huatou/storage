@@ -1,30 +1,31 @@
 package com.zigar.api.entity;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.TableId;
-
-import java.time.LocalDateTime;
-
 import com.baomidou.mybatisplus.annotation.TableField;
-
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.zigar.zigarcore.action.RequestInsertAction;
 import com.zigar.zigarcore.myabtisplus.Unique;
+import com.zigar.zigarcore.utils.DateUtils;
 import com.zigar.zigarcore.utils.StringUtils;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * <p>
@@ -39,7 +40,18 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Accessors(chain = true)
 @TableName("z_user")
 @ApiModel(value = "UserEntity对象", description = "用户")
+@NoArgsConstructor
 public class UserEntity implements Serializable, UserDetails {
+
+    public UserEntity(String username, String password) {
+        this.username = username;
+        this.password = password;
+        this.isAccountNonExpired = true;
+        this.isAccountNonLocked = true;
+        this.isCredentialsNonExpired = true;
+        this.isEnabled = true;
+        this.pwdResetTime = DateUtils.now();
+    }
 
     private static final long serialVersionUID = 1L;
 
@@ -47,11 +59,13 @@ public class UserEntity implements Serializable, UserDetails {
     @TableId("user_id_")
     private String userId;
 
+    @NotBlank(groups = RequestInsertAction.class, message = "用户名不能为空")
     @ApiModelProperty(value = "用户名")
     @TableField("username_")
     @Unique
     private String username;
 
+    @NotBlank(groups = RequestInsertAction.class, message = "密码不能为空")
     @ApiModelProperty(value = "密码")
     @TableField("password_")
     private String password;
@@ -86,15 +100,15 @@ public class UserEntity implements Serializable, UserDetails {
     private String roles;
 
     @JsonIgnore
-    @TableField(value = "is_account_non_expired_", fill = FieldFill.INSERT)
+    @TableField(value = "is_account_non_expired_")
     private Boolean isAccountNonExpired;
 
     @JsonIgnore
-    @TableField(value = "is_account_non_locked_", fill = FieldFill.INSERT)
+    @TableField(value = "is_account_non_locked_")
     private Boolean isAccountNonLocked;
 
     @JsonIgnore
-    @TableField(value = "is_credentials_non_expired_", fill = FieldFill.INSERT)
+    @TableField(value = "is_credentials_non_expired_")
     private Boolean isCredentialsNonExpired;
 
     @ApiModelProperty(value = "是否可用")
@@ -118,22 +132,28 @@ public class UserEntity implements Serializable, UserDetails {
     }
 
     @Override
+    @JsonIgnore
     public boolean isAccountNonExpired() {
         return isAccountNonExpired;
     }
 
     @Override
+    @JsonIgnore
     public boolean isAccountNonLocked() {
         return isAccountNonLocked;
     }
 
     @Override
+    @JsonIgnore
     public boolean isCredentialsNonExpired() {
         return isCredentialsNonExpired;
     }
 
     @Override
+    @JsonIgnore
     public boolean isEnabled() {
         return isEnabled;
     }
+
+
 }

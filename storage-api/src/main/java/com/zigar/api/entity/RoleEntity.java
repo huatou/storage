@@ -1,22 +1,18 @@
 package com.zigar.api.entity;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.TableId;
-
-import java.time.LocalDateTime;
-
 import com.baomidou.mybatisplus.annotation.TableField;
-
-import java.io.Serializable;
-
-import com.baomidou.mybatisplus.core.injector.methods.Insert;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.zigar.zigarcore.myabtisplus.Unique;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -49,7 +45,7 @@ public class RoleEntity implements Serializable {
     private Integer sort;
 
     @ApiModelProperty(value = "是否可用")
-    @TableField("is_enabled_")
+    @TableField(value = "is_enabled_", fill = FieldFill.INSERT)
     private Integer isEnabled;
 
     @ApiModelProperty(value = "创建时间")

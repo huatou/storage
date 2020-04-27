@@ -12,7 +12,6 @@ import com.zigar.zigarcore.properties.JwtProperties;
 import io.jsonwebtoken.ExpiredJwtException;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -24,9 +23,6 @@ import java.lang.reflect.Method;
 
 @Component
 public class AuthenticationInterceptor implements HandlerInterceptor {
-
-    @Autowired
-    RedisCacheManager redisCacheManager;
 
     @Autowired
     IUserService userService;
@@ -75,7 +71,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
             }
 
             //通过解析token获取用户id
-            Long userId;
+            String userId;
             try {
                 userId = jwtTokenUtil.getUserIdFromToken(token);
                 if (userId == null) {

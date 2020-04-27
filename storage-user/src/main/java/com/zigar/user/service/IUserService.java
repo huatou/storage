@@ -2,7 +2,12 @@ package com.zigar.user.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zigar.api.entity.UserEntity;
+import com.zigar.user.model.RegisterUser;
+import com.zigar.zigarcore.action.RequestInsertAction;
 import com.zigar.zigarcore.model.Results;
+import org.springframework.validation.annotation.Validated;
+
+import javax.validation.constraints.NotNull;
 
 /**
  * <p>
@@ -15,19 +20,34 @@ import com.zigar.zigarcore.model.Results;
 public interface IUserService extends IService<UserEntity> {
 
     /**
-     * 更新或新增用户
+     * 新增用户
      *
      * @param userEntity
      */
-    void saveOrUpdateUser(UserEntity userEntity);
-
+    void insertUser(@NotNull @Validated(RequestInsertAction.class) UserEntity userEntity);
 
     /**
-     * 用户登录，成功返回token
+     * 更新用户
      *
      * @param userEntity
+     */
+    void updateUser(@NotNull UserEntity userEntity);
+
+
+//    /**
+//     * 用户登录，成功返回token
+//     *
+//     * @param userEntity
+//     * @return
+//     */
+//    Results<String> userLogin(UserEntity userEntity);
+
+    /**
+     * 用户注册
+     *
+     * @param registerUser
      * @return
      */
-    Results<String> userLogin(UserEntity userEntity);
+    Results<String> userRegister(@NotNull RegisterUser registerUser);
 
 }

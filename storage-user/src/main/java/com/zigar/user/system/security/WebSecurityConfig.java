@@ -24,21 +24,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private CustomUserDetailService customUserDetailService;
 
-//    @Autowired
-//    private DemoFilter demoFilter;
-
     @Autowired
     private ImageCodeAuthenticationFilter imageCodeAuthenticationFilter;
 
-    @Autowired
-    private CustomLoginFailHandler customLoginFailHandler;
-
-    @Autowired
-    private CustomLoginSuccessHandler customLoginSuccessHandler;
-
-    //    @Autowired
-//    private CustomLogoutSuccessHandler customLogoutSuccessHandler;
-//
     @Autowired
     private SecurityProperties securityProperties;
 
@@ -59,11 +47,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()  //定义哪些url需要保护，哪些url不需要保护
-                .antMatchers(securityProperties.getPermitAllUrls())
-                .permitAll()    //定义不需要认证就可以访问
+//                .antMatchers(securityProperties.getPermitAllUrls())
+//                .permitAll()    //定义不需要认证就可以访问
                 .anyRequest()
+                .permitAll()
 //                .fullyAuthenticated()
-                .authenticated()
+//                .authenticated()
 
                 .and()
                 .sessionManagement()

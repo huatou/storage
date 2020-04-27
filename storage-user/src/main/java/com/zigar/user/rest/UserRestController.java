@@ -5,8 +5,11 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.zigar.api.entity.UserEntity;
 import com.zigar.user.service.IUserService;
+import com.zigar.zigarcore.action.RequestInsertAction;
 import com.zigar.zigarcore.model.Results;
+import com.zigar.zigarcore.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,37 +23,39 @@ import java.util.List;
  * @since 2020-03-31
  */
 @RestController
-@RequestMapping("/user")
+@RequestMapping
 public class UserRestController {
 
     @Autowired
     private IUserService userService;
 
-    @GetMapping
-    public List<UserEntity> getUsers(UserEntity userEntity) {
-        QueryWrapper<UserEntity> query = Wrappers.query(userEntity);
-        return userService.list(query);
+    @GetMapping("/user")
+    public Results<List<UserEntity>> getUsers(UserEntity userEntity) {
+        QueryWrapper<UserEntity> query = Wrappers.query(userEntity).select(a -> !StringUtils.equals("password_", a.getColumn()));
+        List<UserEntity> userEntityList = userService.list(query);
+        return Results.succeed(userEntityList);
     }
 
-    @GetMapping("/{userId}")
-    public UserEntity getUser(@PathVariable String userId) {
-        return userService.getById(userId);
+    @GetMapping("/user/{userId}")
+    public Results<UserEntity> getUser(@PathVariable String userId) {
+        UserEntity userEntity = userService.getById(userId);
+        return Results.succeed(userEntity);
     }
 
-    @PostMapping
-    public Results insertUser(@RequestBody UserEntity userEntity)  {
-        userService.saveOrUpdateUser(userEntity);
+    @PostMapping("/user")
+    public Results insertUser(@RequestBody @Validated(RequestInsertAction.class) UserEntity userEntity) {
+        userService.insertUser(userEntity);
         return Results.succeed();
     }
 
-    @PutMapping("/{userId}")
+    @PutMapping("/user/{userId}")
     public Results updateUser(@PathVariable String userId, @RequestBody UserEntity userEntity) {
         userEntity.setUserId(userId);
-        userService.saveOrUpdateUser(userEntity);
+        userService.updateUser(userEntity);
         return Results.succeed();
     }
 
-    @DeleteMapping("/{userId}")
+    @DeleteMapping("/user/{userId}")
     public Results deleteUser(@PathVariable String userId) {
         userService.removeById(userId);
         return Results.succeed();

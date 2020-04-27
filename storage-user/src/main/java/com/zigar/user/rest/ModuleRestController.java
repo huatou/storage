@@ -5,8 +5,10 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.zigar.api.entity.ModuleEntity;
 import com.zigar.user.service.ModuleService;
+import com.zigar.zigarcore.action.RequestInsertAction;
 import com.zigar.zigarcore.model.Results;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -38,7 +40,7 @@ public class ModuleRestController {
     }
 
     @PostMapping
-    public Results insertModule(@RequestBody ModuleEntity moduleEntity) {
+    public Results insertModule(@RequestBody @Validated(RequestInsertAction.class) ModuleEntity moduleEntity) {
         moduleService.saveOrUpdate(moduleEntity);
         return Results.succeed();
     }
