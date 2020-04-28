@@ -4,11 +4,16 @@ package com.zigar.user.rest;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.zigar.api.entity.RoleEntity;
+import com.zigar.api.entity.RoleEntity;
 import com.zigar.user.service.RoleService;
+import com.zigar.zigarcore.model.Page;
 import com.zigar.zigarcore.model.Results;
+import com.zigar.zigarcore.utils.PageHelperUtils;
+import com.zigar.zigarcore.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -20,16 +25,26 @@ import java.util.List;
  * @since 2020-04-23
  */
 @RestController
-@RequestMapping("/role")
+@RequestMapping("/zigar/role")
 public class RoleRestController {
 
     @Autowired
     private RoleService roleService;
 
+    @Autowired
+    private PageHelperUtils pageHelperUtils;
+
     @GetMapping
-    public List<RoleEntity> getRoles(RoleEntity roleEntity) {
-        QueryWrapper<RoleEntity> query = Wrappers.query(roleEntity);
-        return roleService.list(query);
+    public Results<?> getRoles(HttpServletRequest httpServletRequest, RoleEntity roleEntity) {
+        Results<Page<RoleEntity>> pageResults = pageHelperUtils.isPage(httpServletRequest);
+        QueryWrapper<RoleEntity> userQueryWrapper = Wrappers.query(roleEntity);
+        if (pageResults.isSuccess()) {
+            Page<RoleEntity> userPage = roleService.page(pageResults.getData(), userQueryWrapper);
+            return Results.succeed(userPage);
+        } else {
+            List<RoleEntity> list = roleService.list(Wrappers.lambdaQuery(roleEntity));
+            return Results.succeed(list);
+        }
     }
 
     @GetMapping("/{roleId}")

@@ -31,8 +31,6 @@ public class CustomLoginFailHandler implements AuthenticationFailureHandler {
     public void onAuthenticationFailure(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
 
         Results results;
-        httpServletResponse.setContentType("application/json;charset=utf-8");
-
         String username = httpServletRequest.getParameter("username");
         ImageCode imageCode = captchaCacheHandler.setCaptchaCache(username);
         logger.info("------》   用户为：" + username + "的验证码为：" + imageCode.getCode());
@@ -45,7 +43,10 @@ public class CustomLoginFailHandler implements AuthenticationFailureHandler {
             results = Results.error(e.getMessage());
         }
 
+        httpServletResponse.setContentType("application/json;charset=utf-8");
+        httpServletResponse.addHeader("Access-Control-Allow-Origin", "*");
+        httpServletResponse.addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+        httpServletResponse.setHeader("Access-Control-Allow-Headers", "x-requested-with");
         httpServletResponse.getOutputStream().write(JSON.toJSONString(results).getBytes());
-
     }
 }

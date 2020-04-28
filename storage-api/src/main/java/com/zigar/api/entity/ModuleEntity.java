@@ -1,19 +1,25 @@
 package com.zigar.api.entity;
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.zigar.api.model.ActionModel;
 import com.zigar.zigarcore.action.RequestInsertAction;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import org.apache.commons.lang.StringUtils;
+import org.springframework.util.CollectionUtils;
 
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <p>
@@ -41,11 +47,6 @@ public class ModuleEntity implements Serializable {
     @TableField("name_")
     private String name;
 
-    @NotBlank(groups = RequestInsertAction.class, message = "新建请输入操作项，多个以逗号隔开")
-    @ApiModelProperty(value = "操作项，多个以逗号隔开")
-    @TableField("actions_")
-    private String actions;
-
     @ApiModelProperty(value = "排序")
     @TableField("sort_")
     private Integer sort;
@@ -58,5 +59,15 @@ public class ModuleEntity implements Serializable {
     @TableField(value = "create_time_", fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
+    @ApiModelProperty(value = "图标")
+    @TableField("icon_")
+    private String icon;
+
+    @ApiModelProperty(value = "路径")
+    @TableField("to_")
+    private String to;
+
+    @TableField(exist = false)
+    private List<ActionEntity> actionList;
 
 }

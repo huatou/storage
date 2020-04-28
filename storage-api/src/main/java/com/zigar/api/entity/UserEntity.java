@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.zigar.api.model.Menu;
 import com.zigar.zigarcore.action.RequestInsertAction;
 import com.zigar.zigarcore.myabtisplus.Unique;
 import com.zigar.zigarcore.utils.DateUtils;
@@ -42,6 +43,12 @@ import java.util.List;
 @ApiModel(value = "UserEntity对象", description = "用户")
 @NoArgsConstructor
 public class UserEntity implements Serializable, UserDetails {
+
+    public static final String SEX_MALE = "male";
+    public static final String SEX_FEMALE = "female";
+
+    public static final String SEX_MALE_NAME = "男";
+    public static final String SEX_FEMALE_NAME = "女";
 
     public UserEntity(String username, String password) {
         this.username = username;
@@ -115,6 +122,12 @@ public class UserEntity implements Serializable, UserDetails {
     @TableField(value = "is_enabled_", fill = FieldFill.INSERT)
     private Boolean isEnabled;
 
+    /**
+     * 用户拥有的菜单列表
+     */
+    @TableField(exist = false)
+    private List<ModuleEntity> menuList;
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -153,6 +166,22 @@ public class UserEntity implements Serializable, UserDetails {
     @JsonIgnore
     public boolean isEnabled() {
         return isEnabled;
+    }
+
+
+    /**
+     * 获取当前用户的性别名称
+     *
+     * @return
+     */
+    public String getSexName() {
+        String sexName = null;
+        if (StringUtils.equals(sex, SEX_MALE)) {
+            sexName = SEX_MALE_NAME;
+        } else if (StringUtils.equals(sex, SEX_FEMALE)) {
+            sexName = SEX_FEMALE_NAME;
+        }
+        return sexName;
     }
 
 

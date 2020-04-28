@@ -33,21 +33,12 @@ public interface IUserService extends IService<UserEntity> {
      */
     void updateUser(@NotNull UserEntity userEntity);
 
-
-//    /**
-//     * 用户登录，成功返回token
-//     *
-//     * @param userEntity
-//     * @return
-//     */
-//    Results<String> userLogin(UserEntity userEntity);
-
     /**
      * 用户注册
      *
      * @param registerUser
      * @return
      */
-    Results<String> userRegister(@NotNull RegisterUser registerUser);
+    void userRegister(@NotNull RegisterUser registerUser);
 
 }

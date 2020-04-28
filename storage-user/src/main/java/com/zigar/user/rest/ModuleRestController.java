@@ -4,13 +4,18 @@ package com.zigar.user.rest;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.zigar.api.entity.ModuleEntity;
+import com.zigar.api.entity.UserEntity;
 import com.zigar.user.service.ModuleService;
 import com.zigar.zigarcore.action.RequestInsertAction;
+import com.zigar.zigarcore.model.Page;
 import com.zigar.zigarcore.model.Results;
+import com.zigar.zigarcore.utils.PageHelperUtils;
+import com.zigar.zigarcore.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -22,16 +27,26 @@ import java.util.List;
  * @since 2020-04-23
  */
 @RestController
-@RequestMapping("/module")
+@RequestMapping("/zigar/module")
 public class ModuleRestController {
 
     @Autowired
     private ModuleService moduleService;
 
+    @Autowired
+    private PageHelperUtils pageHelperUtils;
+
     @GetMapping
-    public List<ModuleEntity> getModules(ModuleEntity moduleEntity) {
-        QueryWrapper<ModuleEntity> query = Wrappers.query(moduleEntity);
-        return moduleService.list(query);
+    public Results<?> getModules(HttpServletRequest httpServletRequest, ModuleEntity moduleEntity) {
+        Results<Page<ModuleEntity>> pageResults = pageHelperUtils.isPage(httpServletRequest);
+        QueryWrapper<ModuleEntity> userQueryWrapper = Wrappers.query(moduleEntity);
+        if (pageResults.isSuccess()) {
+            Page<ModuleEntity> userPage = moduleService.page(pageResults.getData(), userQueryWrapper);
+            return Results.succeed(userPage);
+        } else {
+            List<ModuleEntity> list = moduleService.list(Wrappers.lambdaQuery(moduleEntity));
+            return Results.succeed(list);
+        }
     }
 
     @GetMapping("/{moduleId}")

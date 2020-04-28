@@ -9,11 +9,13 @@ import com.zigar.zigarcore.model.Results;
 import com.zigar.zigarcore.myabtisplus.ZServiceImpl;
 import com.zigar.zigarcore.utils.DateUtils;
 import com.zigar.zigarcore.utils.StringUtils;
+import io.jsonwebtoken.lang.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 /**
  * <p>
@@ -34,14 +36,23 @@ public class UserServiceImpl extends ZServiceImpl<UserMapper, UserEntity> implem
 
     @Override
     public void insertUser(@NotNull UserEntity userEntity) {
+        String username = userEntity.getUsername();
         String password = userEntity.getPassword();
+        Assert.notNull(username, "username不能为空");
+        Assert.notNull(password, "password不能为空");
         String encodePassword = passwordEncoder.encode(password);
         userEntity.setPassword(encodePassword);
+        userEntity.setPwdResetTime(DateUtils.now());
+        userEntity.setIsAccountNonExpired(true);
+        userEntity.setIsAccountNonLocked(true);
+        userEntity.setIsCredentialsNonExpired(true);
+        userEntity.setIsEnabled(true);
         this.saveOrUpdate(userEntity);
     }
 
     @Override
     public void updateUser(@NotNull UserEntity userEntity) {
+        Assert.notNull(userEntity.getUserId(), "userId不能为空");
         /**
          * 修改密码，密码必须加密
          */
@@ -55,10 +66,13 @@ public class UserServiceImpl extends ZServiceImpl<UserMapper, UserEntity> implem
     }
 
     @Override
-    public Results userRegister(@NotNull RegisterUser registerUser) {
-        UserEntity registerUserEntity = new UserEntity(registerUser.getUsername(), registerUser.getPassword());
+    public void userRegister(@NotNull RegisterUser registerUser) {
+        String username = registerUser.getUsername();
+        String password = registerUser.getPassword();
+        Assert.notNull(username, "username不能为空");
+        Assert.notNull(password, "password不能为空");
+        UserEntity registerUserEntity = new UserEntity(username, password);
         insertUser(registerUserEntity);
-        return Results.succeed();
     }
 
 }

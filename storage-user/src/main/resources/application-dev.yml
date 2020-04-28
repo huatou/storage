@@ -4,6 +4,8 @@ zigar:
   eureka:
     username: zigar
     password: 123456
+  security:
+    permit-all-urls: "/zigar/login"
 
 #系统配置
 spring:
