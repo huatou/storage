@@ -61,10 +61,10 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
         captchaCacheHandler.clearCaptcha(currentUser.getUsername());
         Results results = new Results(true, "登录成功", jwtToken.getToken());
 
-        httpServletResponse.setContentType("application/json;charset=utf-8");
-        httpServletResponse.addHeader("Access-Control-Allow-Origin", "*");
-        httpServletResponse.addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-        httpServletResponse.setHeader("Access-Control-Allow-Headers", "x-requested-with");
+//        httpServletResponse.setContentType("application/json;charset=utf-8");
+//        httpServletResponse.addHeader("Access-Control-Allow-Origin", "*");
+//        httpServletResponse.addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+//        httpServletResponse.setHeader("Access-Control-Allow-Headers", "x-requested-with");
         httpServletResponse.getOutputStream().write(JSON.toJSONString(results).getBytes());
 
     }

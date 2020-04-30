@@ -13,6 +13,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import org.apache.commons.lang.StringUtils;
+import org.apache.ibatis.annotations.ResultMap;
 import org.springframework.util.CollectionUtils;
 
 import javax.validation.constraints.NotBlank;
