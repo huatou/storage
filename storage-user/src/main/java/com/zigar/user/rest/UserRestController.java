@@ -51,7 +51,7 @@ public class UserRestController {
     public Results<?> getUsers(HttpServletRequest httpServletRequest, UserEntity userEntity) {
 
         if (userEntity != null && StringUtils.isNotBlank(userEntity.getUserId())) {
-            getUser(userEntity.getUserId());
+            return getUser(userEntity.getUserId());
         }
 
         Results<Page<UserEntity>> pageResults = pageHelperUtils.isPage(httpServletRequest);
