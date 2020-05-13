@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
+import java.util.Date;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -50,7 +52,7 @@ public class ActionEntity implements Serializable {
 
     @ApiModelProperty(value = "创建时间")
     @TableField("create_time_")
-    private LocalDateTime createTime;
+    private Date createTime;
 
 
 }

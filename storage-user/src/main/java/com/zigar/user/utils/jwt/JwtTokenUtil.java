@@ -146,7 +146,7 @@ public class JwtTokenUtil {
         final String username = getUsernameFromToken(token);
         final Date created = getIssuedAtDateFromToken(token);
         return (username.equals(userEntity.getUsername()) && !isTokenExpired(token))
-                && !isCreatedBeforeLastPasswordReset(created, DateUtils.localDateTime2Date(userEntity.getPwdResetTime()));
+                && !isCreatedBeforeLastPasswordReset(created, userEntity.getPwdResetTime());
     }
 
 

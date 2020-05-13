@@ -1,11 +1,13 @@
 package com.zigar.user.system.security;//package com.zigar.user.system.security;
 
 import com.alibaba.fastjson.JSON;
+import com.netflix.ribbon.proxy.annotation.Http;
 import com.zigar.api.entity.UserEntity;
 import com.zigar.user.utils.jwt.JwtToken;
 import com.zigar.user.utils.jwt.JwtTokenUtil;
 import com.zigar.user.utils.security.SecurityUtils;
 import com.zigar.zigarcore.model.Results;
+import com.zigar.zigarcore.utils.HttpServletResponseUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -47,26 +49,16 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
          * 4.清除该用户对应的验证码
          * 5.返回登录成功消息和token到前台
          */
-
-
         UserEntity currentUser = (UserEntity) authentication.getPrincipal();
         JwtToken jwtToken = jwtTokenUtil.generateToken(currentUser.getUsername(), currentUser.getUserId());
-
 //        String userAgent = httpServletRequest.getHeader("user-agent");
 //        UserLoginLog userLoginLog = new UserLoginLog();
 //        userLoginLog.setUserId(currentUser.getUserId());
 //        userLoginLog.setUserAgent(userAgent);
 //        userLoginLogService.save(userLoginLog);
-
         captchaCacheHandler.clearCaptcha(currentUser.getUsername());
         Results results = new Results(true, "登录成功", jwtToken.getToken());
-
-//        httpServletResponse.setContentType("application/json;charset=utf-8");
-//        httpServletResponse.addHeader("Access-Control-Allow-Origin", "*");
-//        httpServletResponse.addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-//        httpServletResponse.setHeader("Access-Control-Allow-Headers", "x-requested-with");
-        httpServletResponse.getOutputStream().write(JSON.toJSONString(results).getBytes());
-
+        HttpServletResponseUtils.write(httpServletResponse,results);
     }
 
 

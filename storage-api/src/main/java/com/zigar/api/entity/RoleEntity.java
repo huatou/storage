@@ -13,6 +13,7 @@ import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * <p>
@@ -50,7 +51,7 @@ public class RoleEntity implements Serializable {
 
     @ApiModelProperty(value = "创建时间")
     @TableField(value = "create_time_", fill = FieldFill.INSERT)
-    private LocalDateTime createTime;
+    private Date createTime;
 
 
 }

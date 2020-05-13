@@ -6,7 +6,9 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.zigar.api.model.Menu;
+import com.zigar.zigarcore.action.RequestDeleteAction;
 import com.zigar.zigarcore.action.RequestInsertAction;
+import com.zigar.zigarcore.action.RequestUpdateAction;
 import com.zigar.zigarcore.myabtisplus.Unique;
 import com.zigar.zigarcore.utils.DateUtils;
 import com.zigar.zigarcore.utils.StringUtils;
@@ -26,6 +28,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -62,6 +65,7 @@ public class UserEntity implements Serializable, UserDetails {
 
     private static final long serialVersionUID = 1L;
 
+    @NotBlank(groups = {RequestUpdateAction.class, RequestDeleteAction.class}, message = "userId不能为空")
     @ApiModelProperty(value = "用户ID")
     @TableId("user_id_")
     private String userId;
@@ -92,15 +96,15 @@ public class UserEntity implements Serializable, UserDetails {
 
     @ApiModelProperty(value = "最后登录时间")
     @TableField("last_login_time_")
-    private LocalDateTime lastLoginTime;
+    private Date lastLoginTime;
 
     @ApiModelProperty(value = "创建时间")
     @TableField(value = "create_time_", fill = FieldFill.INSERT)
-    private LocalDateTime createTime;
+    private Date createTime;
 
     @JsonIgnore
     @TableField(value = "pwd_reset_time_")
-    private LocalDateTime pwdResetTime;
+    private Date pwdResetTime;
 
     @JsonIgnore
     @TableField(value = "roles_")

@@ -20,7 +20,6 @@ public class CaptchaCacheHandler {
     private RedisTemplate redisTemplate;
 
     public String getCaptchaCacheByUsername(String username) {
-
         String key = getCaptchaKeyByUserName(username);
         Object result = redisTemplate.opsForValue().get(key);
         if (result != null) {

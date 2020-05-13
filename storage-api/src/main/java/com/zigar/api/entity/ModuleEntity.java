@@ -20,6 +20,7 @@ import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -58,7 +59,7 @@ public class ModuleEntity implements Serializable {
 
     @ApiModelProperty(value = "创建时间")
     @TableField(value = "create_time_", fill = FieldFill.INSERT)
-    private LocalDateTime createTime;
+    private Date createTime;
 
     @ApiModelProperty(value = "图标")
     @TableField("icon_")

@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableField;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -55,11 +56,11 @@ public class PrivilegeEntity implements Serializable {
 
     @ApiModelProperty(value = "权限类型，用户（user），角色（role）")
     @TableField("type_")
-    private LocalDateTime type;
+    private Date type;
 
     @ApiModelProperty(value = "创建时间")
     @TableField(value = "create_time_",fill = FieldFill.INSERT)
-    private LocalDateTime createTime;
+    private Date createTime;
 
 
 }

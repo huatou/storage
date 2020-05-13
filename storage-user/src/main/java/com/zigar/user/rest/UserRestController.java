@@ -10,7 +10,9 @@ import com.zigar.user.service.IUserService;
 import com.zigar.user.service.ModuleService;
 import com.zigar.user.utils.jwt.PassToken;
 import com.zigar.user.utils.security.SecurityUtils;
+import com.zigar.zigarcore.action.RequestDeleteAction;
 import com.zigar.zigarcore.action.RequestInsertAction;
+import com.zigar.zigarcore.action.RequestUpdateAction;
 import com.zigar.zigarcore.model.Page;
 import com.zigar.zigarcore.model.Results;
 import com.zigar.zigarcore.utils.PageHelperUtils;
@@ -47,6 +49,11 @@ public class UserRestController {
 
     @GetMapping
     public Results<?> getUsers(HttpServletRequest httpServletRequest, UserEntity userEntity) {
+
+        if (userEntity != null && StringUtils.isNotBlank(userEntity.getUserId())) {
+            getUser(userEntity.getUserId());
+        }
+
         Results<Page<UserEntity>> pageResults = pageHelperUtils.isPage(httpServletRequest);
         QueryWrapper<UserEntity> userQueryWrapper = Wrappers.query(userEntity);
         userQueryWrapper.lambda().select(i -> !StringUtils.equals(i.getProperty(), "password"));
@@ -59,8 +66,7 @@ public class UserRestController {
         }
     }
 
-    @GetMapping("/{userId}")
-    public Results<UserEntity> getUser(@PathVariable String userId) {
+    public Results<UserEntity> getUser(String userId) {
         if (StringUtils.equals(userId, CURRENT_USER_URL)) {
             UserEntity currentUser = SecurityUtils.getCurrentUser();
             userId = currentUser.getUserId();
@@ -81,16 +87,15 @@ public class UserRestController {
         return Results.succeed();
     }
 
-    @PutMapping("/{userId}")
-    public Results updateUser(@PathVariable String userId, @RequestBody UserEntity userEntity) {
-        userEntity.setUserId(userId);
+    @PutMapping
+    public Results updateUser(@RequestBody @Validated(RequestUpdateAction.class) UserEntity userEntity) {
         userService.updateUser(userEntity);
         return Results.succeed();
     }
 
-    @DeleteMapping("/{userId}")
-    public Results deleteUser(@PathVariable String userId) {
-        userService.removeById(userId);
+    @DeleteMapping
+    public Results deleteUser(@RequestBody @Validated(RequestDeleteAction.class) UserEntity userEntity) {
+        userService.removeById(userEntity.getUserId());
         return Results.succeed();
     }
 

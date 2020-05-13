@@ -2,6 +2,7 @@ package com.zigar.user.system.security;//package com.zigar.user.system.security;
 
 import com.alibaba.fastjson.JSON;
 import com.zigar.zigarcore.model.Results;
+import com.zigar.zigarcore.utils.HttpServletResponseUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,6 @@ public class CustomLoginFailHandler implements AuthenticationFailureHandler {
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
-
         Results results;
         String username = httpServletRequest.getParameter("username");
         ImageCode imageCode = captchaCacheHandler.setCaptchaCache(username);
@@ -42,11 +42,6 @@ public class CustomLoginFailHandler implements AuthenticationFailureHandler {
         } else {
             results = Results.error(e.getMessage());
         }
-
-        httpServletResponse.setContentType("application/json;charset=utf-8");
-        httpServletResponse.addHeader("Access-Control-Allow-Origin", "*");
-        httpServletResponse.addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-        httpServletResponse.setHeader("Access-Control-Allow-Headers", "x-requested-with");
-        httpServletResponse.getOutputStream().write(JSON.toJSONString(results).getBytes());
+        HttpServletResponseUtils.write(httpServletResponse,results);
     }
 }

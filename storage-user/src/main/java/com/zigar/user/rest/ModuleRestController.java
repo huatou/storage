@@ -36,7 +36,7 @@ public class ModuleRestController {
     @Autowired
     private PageHelperUtils pageHelperUtils;
 
-    @GetMapping
+    @GetMapping("/zigar/module")
     public Results<?> getModules(HttpServletRequest httpServletRequest, ModuleEntity moduleEntity) {
         Results<Page<ModuleEntity>> pageResults = pageHelperUtils.isPage(httpServletRequest);
         QueryWrapper<ModuleEntity> userQueryWrapper = Wrappers.query(moduleEntity);
