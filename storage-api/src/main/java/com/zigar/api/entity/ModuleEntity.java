@@ -12,7 +12,10 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import org.apache.commons.lang.StringUtils;
+import org.springframework.util.CollectionUtils;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Date;
@@ -35,7 +38,7 @@ public class ModuleEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @NotBlank(groups = {RequestUpdateAction.class, RequestDeleteAction.class}, message = "新建请输入模块名")
+    @NotBlank(groups = {RequestUpdateAction.class, RequestDeleteAction.class}, message = "moduleId不能为空")
     @ApiModelProperty(value = "模块ID")
     @TableId("module_id_")
     private String moduleId;
@@ -66,6 +69,16 @@ public class ModuleEntity implements Serializable {
     private String to;
 
     @TableField(exist = false)
+    @Valid
     private List<ActionEntity> actionList;
+
+    public List<ActionEntity> getActionList() {
+        if (!CollectionUtils.isEmpty(actionList) && StringUtils.isNotEmpty(moduleId)) {
+            actionList.forEach(actionEntity -> {
+                actionEntity.setModuleId(moduleId);
+            });
+        }
+        return actionList;
+    }
 
 }

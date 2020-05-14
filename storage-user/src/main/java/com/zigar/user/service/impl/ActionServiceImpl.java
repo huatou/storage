@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zigar.api.entity.ActionEntity;
 import com.zigar.user.mapper.ActionMapper;
 import com.zigar.user.service.ActionService;
+import com.zigar.zigarcore.myabtisplus.ZServiceImpl;
 import org.springframework.stereotype.Service;
 
 /**
@@ -15,6 +16,6 @@ import org.springframework.stereotype.Service;
  * @since 2020-04-28
  */
 @Service
-public class ActionServiceImpl extends ServiceImpl<ActionMapper, ActionEntity> implements ActionService {
+public class ActionServiceImpl extends ZServiceImpl<ActionMapper, ActionEntity> implements ActionService {
 
 }

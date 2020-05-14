@@ -58,13 +58,13 @@ public class ModuleRestController {
 
     @PostMapping
     public Results insertModule(@RequestBody @Validated(RequestInsertAction.class) ModuleEntity moduleEntity) {
-        moduleService.saveOrUpdate(moduleEntity);
+        moduleService.insertModule(moduleEntity);
         return Results.succeed();
     }
 
     @PutMapping
     public Results updateModule(@RequestBody @Validated(RequestUpdateAction.class) ModuleEntity moduleEntity) {
-        moduleService.saveOrUpdate(moduleEntity);
+        moduleService.updateModule(moduleEntity);
         return Results.succeed();
     }
 

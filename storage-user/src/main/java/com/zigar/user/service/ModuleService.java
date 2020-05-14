@@ -3,6 +3,10 @@ package com.zigar.user.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zigar.api.entity.ModuleEntity;
+import com.zigar.zigarcore.action.RequestInsertAction;
+import org.springframework.validation.annotation.Validated;
+
+import javax.validation.Valid;
 
 /**
  * <p>
@@ -13,5 +17,9 @@ import com.zigar.api.entity.ModuleEntity;
  * @since 2020-04-23
  */
 public interface ModuleService extends IService<ModuleEntity> {
+
+    void insertModule(ModuleEntity moduleEntity);
+
+    void updateModule(ModuleEntity moduleEntity);
 
 }
