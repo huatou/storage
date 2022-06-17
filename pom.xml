@@ -35,7 +35,7 @@
         <swagger.version>2.9.2</swagger.version>
         <velocity-engine.version>2.1</velocity-engine.version>
         <p6spy.version>3.8.5</p6spy.version>
-        <fastjson.version>1.2.47</fastjson.version>
+        <fastjson.version>1.2.83</fastjson.version>
         <jackson-annotations.version>2.10.0</jackson-annotations.version>
         <aspectjrt.version>1.9.4</aspectjrt.version>
         <spring-cloud.version>Hoxton.SR1</spring-cloud.version>
